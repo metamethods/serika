@@ -37,6 +37,7 @@
       "@util/*": ["util/*"],
       "@classes/*": ["classes/*"],
       "@typings/*": ["typings/*"],
+      "@components/*": ["components/*"],
       
       "@/*": ["*"],
       "#root/*": ["../*"],
