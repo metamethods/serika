@@ -6,7 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nodemon --exec ts-node src/index.ts --ignore src/**/*"
+    "dev": "nodemon --exec ts-node src/index.ts --ignore src/**/*",
+    "start": "ts-node src/index.ts"
   },
   "dependencies": {
     "chalk": "4.1.2",
