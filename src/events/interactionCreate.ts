@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, CommandInteraction, Events } from "discord.js";
+import { ChatInputCommandInteraction, CommandInteraction, Events, Collection } from "discord.js";
 
 import Event from "@classes/Event";
 import Info from "@util/Info";
@@ -12,6 +12,21 @@ async function command(interaction: CommandInteraction) {
 
   if (!command)
     return info.write("Warn", `Command "${interaction.commandName}" was not found`);
+
+  if (!client.cooldowns.has(command.data.name))
+    client.cooldowns.set(command.data.name, new Collection());
+
+  const timestamps = client.cooldowns.get(command.data.name)!;
+
+  if (timestamps.has(interaction.user.id)) {
+    const expirationTime = timestamps.get(interaction.user.id)!;
+
+    if (Date.now() < expirationTime) {
+      const timeLeft = Math.round((expirationTime - Date.now()) / 1000);
+      return interaction.reply({ content: `Sensi! Give me ${timeLeft} second${timeLeft <= 1 ? "" : "s"} before trying ${command.data.name} again!`, ephemeral: true });
+    }
+  } else 
+    timestamps.set(interaction.user.id, Date.now() + (command.cooldown || 0) * 1000);
 
   try {
     await info.writeRun(

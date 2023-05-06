@@ -4,6 +4,7 @@ import Files from "@util/Files";
 import Info from "util/Info";
 
 import { importFileDefault } from "@util/imports";
+import loadModule from "@util/loadModule";
 
 import { CommandType } from "@typings/command";
 
@@ -12,6 +13,9 @@ const info = new Info("Client");
 export default class ExtendedClient extends Client {
   commands: Collection<string, CommandType> = new Collection();
   stagedCommands: SlashCommandBuilder[] = [];
+
+  // Misc Collections
+  cooldowns: Collection<string, Collection<string, number>> = new Collection();
 
   constructor(
     options: ClientOptions,
@@ -22,16 +26,12 @@ export default class ExtendedClient extends Client {
   }
 
   private async loadModules() {
-    const files = new Files("modules/client/**/*.ts", true);
-
-    for (const file of await files.find()) {
-      const module = await importFileDefault(file, false);
-
+    await loadModule("client", async (module) => {
       await info.writeRun(
         "Info", `Loading ${module.name}`,
         () => module(this)
       );
-    }
+    });
 
     info.write("Ok", "Loaded all modules");
   }
@@ -98,5 +98,7 @@ export default class ExtendedClient extends Client {
       "Awaiting", "Attempting to login",
       () => this.login(this.botInfo.token)
     );
+
+
   }
 }
