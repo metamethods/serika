@@ -7,7 +7,7 @@ export default new Command({
     .setDescription("Hey sensi"),
   run: async ({ interaction }) => {
     await interaction.reply({
-      content: `Hii sensi~ <3`,
+      content: `Hii sensei~ <3`,
     });
   }
 })
