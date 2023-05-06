@@ -27,7 +27,7 @@ async function command(interaction: CommandInteraction) {
 
     if (Date.now() < expirationTime) {
       const timeLeft = Math.round((expirationTime - Date.now()) / 1000);
-      return interaction.reply({ content: `Sensi! Give me ${timeLeft} second${timeLeft <= 1 ? "" : "s"} before trying ${command.data.name} again!`, ephemeral: true });
+      return interaction.reply({ content: `Sensei! Give me ${timeLeft} second${timeLeft <= 1 ? "" : "s"} before trying ${command.data.name} again!`, ephemeral: true });
     }
   } else 
     timestamps.set(interaction.user.id, Date.now() + (command.cooldown || 0) * 1000);
