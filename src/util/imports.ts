@@ -4,7 +4,7 @@ export function clearCache(filePath: string) {
 
 export async function importFile(
   filePath: string,
-  reload?: boolean,
+  reload: boolean = true,
 ) {
   filePath = `${process.cwd()}/${filePath.replace(process.cwd(), "").replace(/\\/g, "/")}`
 
@@ -16,7 +16,7 @@ export async function importFile(
 
 export async function importFileDefault(
   filePath: string,
-  reload?: boolean,
+  reload: boolean = true,
 ) {
   return (await importFile(filePath, reload)).default;
 }
