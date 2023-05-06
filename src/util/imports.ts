@@ -17,7 +17,7 @@ export async function importFile(
   filePath: string,
   reload?: boolean,
 ) {
-  filePath = `${process.cwd()}/${filePath.replace(/\\/g, "/")}`
+  filePath = `/${filePath.replace(/\\/g, "/")}`
 
   if (reload) 
     clearCache(filePath);
