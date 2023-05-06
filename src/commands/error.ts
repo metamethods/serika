@@ -6,7 +6,7 @@ export default new Command({
     .setName("error")
     .setDescription("Forces an error"),
   cooldown: 5,
-  run: async ({ interaction, client }) => {
+  run: async () => {
     throw new Error("Test");
   }
 })
