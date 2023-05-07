@@ -7,7 +7,7 @@ import Files from "@util/Files";
 import { importFileDefault } from "@util/imports";
 import { StringSelectMenuType } from "@typings/stringSelectMenu";
 
-import { client } from "#client";
+import { client } from "#index";
 
 const info = new Info("Interaction");
 
@@ -27,7 +27,7 @@ async function command(interaction: CommandInteraction) {
 
     if (Date.now() < expirationTime) {
       const timeLeft = Math.round((expirationTime - Date.now()) / 1000);
-      return interaction.reply({ content: `Sensei! Give me ${timeLeft} second${timeLeft <= 1 ? "" : "s"} before trying ${command.data.name} again!`, ephemeral: true });
+      return interaction.reply({ content: `Sensei! Give me ${timeLeft} second${timeLeft <= 1 ? "" : "s"} before trying to do "${command.data.name}" again!`, ephemeral: true });
     }
   } else 
     timestamps.set(interaction.user.id, Date.now() + (command.cooldown || 0) * 1000);

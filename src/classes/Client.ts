@@ -6,6 +6,8 @@ import Info from "util/Info";
 import { importFileDefault } from "@util/imports";
 import loadModule from "@util/loadModule";
 
+import { mongoClient } from "#index";
+
 import { CommandType } from "@typings/command";
 
 const info = new Info("Client");
@@ -76,6 +78,13 @@ export default class ExtendedClient extends Client {
   }
 
   public async start() {
+    // Mongo
+    await info.writeRun(
+      "Awaiting", "Connecting to mongodb",
+      () => mongoClient.connect()
+    );
+    info.write("Ok", "Connected to mongodb");
+
     // Modules
     await info.writeRun(
       "Awaiting", "Loading modules",
@@ -98,7 +107,5 @@ export default class ExtendedClient extends Client {
       "Awaiting", "Attempting to login",
       () => this.login(this.botInfo.token)
     );
-
-
   }
 }
