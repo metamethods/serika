@@ -48,10 +48,6 @@ export class Economy {
     return Math.floor((1/Math.sqrt(10)) * Math.sqrt(currentXp));
   }
 
-  private fixXp(xp: number) {
-    return xp - (10 ** this.levelFunction(xp));
-  }
-
   public async getXp() {
     return await this.get<Xp>(this.xp, xpTemplate);
   }
@@ -65,7 +61,7 @@ export class Economy {
       { userId: this.userId },
       { $set: { 
         realXp: newXp,
-        xp: this.fixXp(newXp),
+        // xp: this.fixXp(newXp),
         level: this.levelFunction(newXp)
       }}
     );
