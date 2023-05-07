@@ -4,12 +4,14 @@ import { Command } from "@classes/Command";
 import Files from "@util/Files";
 
 import commands from "@components/select-menus/commands";
+import command from "@components/embeds/command";
 
 export default new Command({
   data: new SlashCommandBuilder()
     .setName("commands")
     .setDescription("Get a list of commands"),
-  run: async ({ interaction }) => {
+  run: async ({ interaction, client }) => {
+    // Dynamically add options to the select menu
     const selection = commands.menu.addOptions(
       (await Files.find("commands/*", true)).map((folder: string) => {
         const folderName = folder.split(/[\\/]/).pop()!;
@@ -18,14 +20,16 @@ export default new Command({
           .setLabel(folderName)
           .setValue(folderName)
       })
-    )
+    );
 
-    const row = new ActionRowBuilder<StringSelectMenuBuilder>()
-      .addComponents(selection)
-    
     await interaction.reply({
-      content: "Placeholder",
-      components: [row]
+      embeds: [
+        command.setThumbnail(client.user?.avatarURL()!)
+      ],
+      components: [
+        new ActionRowBuilder<StringSelectMenuBuilder>()
+          .addComponents(selection)
+      ]
     });
   }
 })
