@@ -5,6 +5,6 @@ export const balanceTemplate = {
 
 export const xpTemplate = {
   realXp: 0,
-  xp: 0,
+  xp: 0, // Deprecated
   level: 0
 }

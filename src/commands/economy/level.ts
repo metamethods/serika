@@ -16,6 +16,6 @@ export default new Command({
     if (!account) 
       throw new Error("Account not found");
 
-    await interaction.reply({ content: `You are at level **${account.level}** with **${account.xp}** xp` });
+    await interaction.reply({ content: `You are at level **${account.level}** with **${account.realXp}** xp` });
   }
 })
